@@ -26,5 +26,37 @@ namespace AbpNorthwindTraders.Domain
     {
       OrderDetails = new HashSet<OrderDetail>();
     }
+
+    public Product(
+        int id,
+        string productName,
+        int? supplierId,
+        int? categoryId,
+        string quantityPerUnit,
+        decimal? unitPrice,
+        short? unitsInStock,
+        short? unitsOnOrder,
+        short? reorderLevel,
+        bool discontinued,
+        Category category,
+        Supplier supplier,
+        ICollection<OrderDetail> orderDetails,
+        Guid? tenantId
+    ) : base(id)
+    {
+      ProductName = productName;
+      SupplierId = supplierId;
+      CategoryId = categoryId;
+      QuantityPerUnit = quantityPerUnit;
+      UnitPrice = unitPrice;
+      UnitsInStock = unitsInStock;
+      UnitsOnOrder = unitsOnOrder;
+      ReorderLevel = reorderLevel;
+      Discontinued = discontinued;
+      Category = category;
+      Supplier = supplier;
+      OrderDetails = orderDetails;
+      TenantId = tenantId;
+    }
   }
 }

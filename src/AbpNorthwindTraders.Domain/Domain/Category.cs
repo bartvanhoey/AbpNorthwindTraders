@@ -17,5 +17,21 @@ namespace AbpNorthwindTraders.Domain
         {
             Products = new HashSet<Product>();
         }
+
+        public Category(
+            int id, 
+            string categoryName, 
+            string description, 
+            byte[] picture, 
+            ICollection<Product> products, 
+            Guid? tenantId
+        ) : base(id)
+        {
+            CategoryName = categoryName;
+            Description = description;
+            Picture = picture;
+            Products = products;
+            TenantId = tenantId;
+        }
     }
 }

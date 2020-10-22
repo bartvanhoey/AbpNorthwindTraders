@@ -25,5 +25,37 @@ namespace AbpNorthwindTraders.Domain
         {
             Products = new HashSet<Product>();
         }
+
+        public Supplier(
+            int id, 
+            string companyName, 
+            string contactName, 
+            string contactTitle, 
+            string address, 
+            string city, 
+            string region, 
+            string postalCode, 
+            string country, 
+            string phone, 
+            string fax, 
+            string homePage, 
+            Guid? tenantId, 
+            ICollection<Product> products
+        ) : base(id)
+        {
+            CompanyName = companyName;
+            ContactName = contactName;
+            ContactTitle = contactTitle;
+            Address = address;
+            City = city;
+            Region = region;
+            PostalCode = postalCode;
+            Country = country;
+            Phone = phone;
+            Fax = fax;
+            HomePage = homePage;
+            TenantId = tenantId;
+            Products = products;
+        }
     }
 }
