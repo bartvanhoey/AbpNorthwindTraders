@@ -17,5 +17,22 @@ namespace AbpNorthwindTraders.Domain
     {
       EmployeeTerritories = new HashSet<EmployeeTerritory>();
     }
+
+    public Territory(
+        string id,
+        string territoryDescription,
+        int regionId,
+        Region region,
+        ICollection<EmployeeTerritory> employeeTerritories,
+        Guid? tenantId
+    ) : base(id)
+    {
+      Id = id;
+      TerritoryDescription = territoryDescription;
+      RegionId = regionId;
+      Region = region;
+      EmployeeTerritories = employeeTerritories;
+      TenantId = tenantId;
+    }
   }
 }

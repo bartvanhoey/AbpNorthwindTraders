@@ -22,5 +22,37 @@ namespace AbpNorthwindTraders.Domain
     public Guid? TenantId { get; }
 
     public Customer() { }
+
+
+    public Customer(
+        string id,
+        string companyName,
+        string contactName,
+        string contactTitle,
+        string address,
+        string city,
+        string region,
+        string postalCode,
+        string country,
+        string phone,
+        string fax,
+        ICollection<Order> orders,
+        Guid? tenantId
+    ) : base(id)
+    {
+      Id = id;
+      CompanyName = companyName;
+      ContactName = contactName;
+      ContactTitle = contactTitle;
+      Address = address;
+      City = city;
+      Region = region;
+      PostalCode = postalCode;
+      Country = country;
+      Phone = phone;
+      Fax = fax;
+      Orders = orders;
+      TenantId = tenantId;
+    }
   }
 }
