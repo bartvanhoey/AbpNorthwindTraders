@@ -25,6 +25,13 @@ namespace AbpNorthwindTraders.Blazor
                 )
             );
 
+            var northwindTradersMenu = new ApplicationMenuItem("NorthwindTraders",l["Menu:NorthwindTraders"], icon: "fas fa-truck");
+            var regionsMenu = new ApplicationMenuItem("Regions",l["Menu:Regions"], url: "/regions");
+
+            northwindTradersMenu.AddItem(regionsMenu);
+            context.Menu.AddItem(northwindTradersMenu);
+
+
             return Task.CompletedTask;
         }
     }
