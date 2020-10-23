@@ -6,8 +6,6 @@ namespace AbpNorthwindTraders.Domain.Dtos
     [Serializable]
     public class CustomerDto : FullAuditedEntityDto<string>
     {
-        public string Id { get; set; }
-
         public string CompanyName { get; set; }
 
         public string ContactName { get; set; }

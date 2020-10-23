@@ -151,6 +151,14 @@
     "OrderOrderDetails": "OrderOrderDetails",
     "CreateOrder": "CreateOrder",
     "EditOrder": "EditOrder",
-    "OrderDeletionConfirmationMessage": "Are you sure to delete the order {0}?"
+    "OrderDeletionConfirmationMessage": "Are you sure to delete the order {0}?",
+    "Menu:NorthwindTraders": "NorthwindTraders",
+    "Menu:Regions": "Regions",
+    "NewRegion": "New region",
+    "RegionDescription": "Region description",
+    "Edit": "Edit",
+    "Delete": "Delete"
+
+
   }
 }
