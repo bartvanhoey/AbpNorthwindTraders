@@ -11,8 +11,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpNorthwindTraders.Migrations
 {
     [DbContext(typeof(AbpNorthwindTradersMigrationsDbContext))]
-    [Migration("20201022153358_ApplicationServices_Added")]
-    partial class ApplicationServices_Added
+    [Migration("20201023071826_ApplicationServices")]
+    partial class ApplicationServices
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -593,8 +593,10 @@ namespace AbpNorthwindTraders.Migrations
             modelBuilder.Entity("AbpNorthwindTraders.Domain.Region", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("RegionID")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")

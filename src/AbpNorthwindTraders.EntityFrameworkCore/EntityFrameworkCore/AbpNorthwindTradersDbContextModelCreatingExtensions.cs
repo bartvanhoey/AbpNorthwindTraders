@@ -6,45 +6,45 @@ using static AbpNorthwindTraders.AbpNorthwindTradersSharedDomainConstants;
 
 namespace AbpNorthwindTraders.EntityFrameworkCore
 {
-    public static class AbpNorthwindTradersDbContextModelCreatingExtensions
+  public static class AbpNorthwindTradersDbContextModelCreatingExtensions
+  {
+    public static void ConfigureAbpNorthwindTraders(this ModelBuilder builder)
     {
-        public static void ConfigureAbpNorthwindTraders(this ModelBuilder builder)
-        {
-            Check.NotNull(builder, nameof(builder));
+      Check.NotNull(builder, nameof(builder));
 
-            /* Configure your own tables/entities inside here */
+      /* Configure your own tables/entities inside here */
 
-            //builder.Entity<YourEntity>(b =>
-            //{
-            //    b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "YourEntities", AbpNorthwindTradersConsts.DbSchema);
-            //    b.ConfigureByConvention(); //auto configure for the base class props
-            //    //...
-            //});
+      //builder.Entity<YourEntity>(b =>
+      //{
+      //    b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "YourEntities", AbpNorthwindTradersConsts.DbSchema);
+      //    b.ConfigureByConvention(); //auto configure for the base class props
+      //    //...
+      //});
 
 
-            builder.Entity<Employee>(b =>
-        {
-          b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "Employees", AbpNorthwindTradersConsts.DbSchema);
-          b.ConfigureByConvention();
-          b.Property(e => e.Id).HasColumnName("EmployeeID");
-          b.Property(e => e.Address).HasMaxLength(EmployeeConsts.MaxLengthAddress);
-          b.Property(e => e.BirthDate).HasColumnType("datetime");
-          b.Property(e => e.City).HasMaxLength(EmployeeConsts.MaxLengthCity);
-          b.Property(e => e.Country).HasMaxLength(EmployeeConsts.MaxLengthCountry);
-          b.Property(e => e.Extension).HasMaxLength(EmployeeConsts.MaxLengthExtension);
-          b.Property(e => e.FirstName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthFirstName);
-          b.Property(e => e.HireDate).HasColumnType("datetime");
-          b.Property(e => e.HomePhone).HasMaxLength(EmployeeConsts.MaxLengthHomePhone);
-          b.Property(e => e.LastName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthLastName);
-          b.Property(e => e.Notes).HasColumnType("ntext");
-          b.Property(e => e.Photo).HasColumnType("image");
-          b.Property(e => e.PhotoPath).HasMaxLength(EmployeeConsts.MaxLengthPhotoPath);
-          b.Property(e => e.PostalCode).HasMaxLength(EmployeeConsts.MaxLengthPostalCode);
-          b.Property(e => e.Region).HasMaxLength(EmployeeConsts.MaxLengthRegion);
-          b.Property(e => e.Title).HasMaxLength(EmployeeConsts.MaxLengthTitle);
-          b.HasOne(d => d.Manager).WithMany(p => p.DirectReports).HasForeignKey(d => d.ReportsTo)
-                  .HasConstraintName("FK_Employees_Employees");
-        });
+      builder.Entity<Employee>(b =>
+    {
+        b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "Employees", AbpNorthwindTradersConsts.DbSchema);
+        b.ConfigureByConvention();
+        b.Property(e => e.Id).HasColumnName("EmployeeID");
+        b.Property(e => e.Address).HasMaxLength(EmployeeConsts.MaxLengthAddress);
+        b.Property(e => e.BirthDate).HasColumnType("datetime");
+        b.Property(e => e.City).HasMaxLength(EmployeeConsts.MaxLengthCity);
+        b.Property(e => e.Country).HasMaxLength(EmployeeConsts.MaxLengthCountry);
+        b.Property(e => e.Extension).HasMaxLength(EmployeeConsts.MaxLengthExtension);
+        b.Property(e => e.FirstName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthFirstName);
+        b.Property(e => e.HireDate).HasColumnType("datetime");
+        b.Property(e => e.HomePhone).HasMaxLength(EmployeeConsts.MaxLengthHomePhone);
+        b.Property(e => e.LastName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthLastName);
+        b.Property(e => e.Notes).HasColumnType("ntext");
+        b.Property(e => e.Photo).HasColumnType("image");
+        b.Property(e => e.PhotoPath).HasMaxLength(EmployeeConsts.MaxLengthPhotoPath);
+        b.Property(e => e.PostalCode).HasMaxLength(EmployeeConsts.MaxLengthPostalCode);
+        b.Property(e => e.Region).HasMaxLength(EmployeeConsts.MaxLengthRegion);
+        b.Property(e => e.Title).HasMaxLength(EmployeeConsts.MaxLengthTitle);
+        b.HasOne(d => d.Manager).WithMany(p => p.DirectReports).HasForeignKey(d => d.ReportsTo)
+                .HasConstraintName("FK_Employees_Employees");
+    });
 
 
       builder.Entity<Region>(b =>
@@ -52,7 +52,7 @@ namespace AbpNorthwindTraders.EntityFrameworkCore
         b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "Regions", AbpNorthwindTradersConsts.DbSchema);
         b.ConfigureByConvention();
         b.HasKey(e => e.Id).IsClustered(false);
-        b.Property(e => e.Id).HasColumnName("RegionID").ValueGeneratedNever();
+        b.Property(e => e.Id).HasColumnName("RegionID");
         b.Property(e => e.RegionDescription).IsRequired().HasMaxLength(RegionConsts.MaxLengthRegionDescription);
       });
 
@@ -192,6 +192,6 @@ namespace AbpNorthwindTraders.EntityFrameworkCore
                   .OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Order_Details_Products");
       });
 
-        }
     }
+  }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AbpNorthwindTraders.Migrations
 {
-    public partial class ApplicationServices_Added : Migration
+    public partial class ApplicationServices : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -106,7 +106,8 @@ namespace AbpNorthwindTraders.Migrations
                 name: "AppRegions",
                 columns: table => new
                 {
-                    RegionID = table.Column<int>(nullable: false),
+                    RegionID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorId = table.Column<Guid>(nullable: true),
                     LastModificationTime = table.Column<DateTime>(nullable: true),

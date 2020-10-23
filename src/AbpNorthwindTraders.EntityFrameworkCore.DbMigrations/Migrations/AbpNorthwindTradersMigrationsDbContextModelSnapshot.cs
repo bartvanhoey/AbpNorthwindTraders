@@ -591,8 +591,10 @@ namespace AbpNorthwindTraders.Migrations
             modelBuilder.Entity("AbpNorthwindTraders.Domain.Region", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("RegionID")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")

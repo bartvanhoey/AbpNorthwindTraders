@@ -10,10 +10,16 @@ namespace AbpNorthwindTraders.Domain.DataSeeder.Data
       var regions = new List<Region>();
       regions.AddRange(new[]
       {
-                new Region {Id = 1, RegionDescription = "Eastern"},
-                new Region {Id = 2, RegionDescription = "Western"},
-                new Region {Id = 3, RegionDescription = "Northern"},
-                new Region {Id = 4, RegionDescription = "Southern"}
+                // new Region {Id = 1, RegionDescription = "Eastern"},
+                // new Region {Id = 2, RegionDescription = "Western"},
+                // new Region {Id = 3, RegionDescription = "Northern"},
+                // new Region {Id = 4, RegionDescription = "Southern"}
+
+                new Region {RegionDescription = "Eastern"},
+                new Region {RegionDescription = "Western"},
+                new Region {RegionDescription = "Northern"},
+                new Region {RegionDescription = "Southern"}
+
             });
 
       return regions;
