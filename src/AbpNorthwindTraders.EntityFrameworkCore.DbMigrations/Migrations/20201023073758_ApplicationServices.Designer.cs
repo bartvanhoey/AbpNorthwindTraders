@@ -11,7 +11,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpNorthwindTraders.Migrations
 {
     [DbContext(typeof(AbpNorthwindTradersMigrationsDbContext))]
-    [Migration("20201023071826_ApplicationServices")]
+    [Migration("20201023073758_ApplicationServices")]
     partial class ApplicationServices
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
