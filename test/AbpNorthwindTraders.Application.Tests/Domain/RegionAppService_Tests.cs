@@ -24,19 +24,18 @@ namespace AbpNorthwindTraders.Domain
         //     result.Items.ShouldContain(r => r.RegionDescription == "Southern");
         // }
 
-        [Fact]
-        public async Task Should_Create_A_Valid_Region()
-        {
-            var result = await _regionAppService.CreateAsync(
-                new CreateRegionDto
-                {
-                    RegionDescription = "My new region"
-                }
-            );            
+        // [Fact]
+        // public async Task Should_Create_A_Valid_Region()
+        // {
+        //     var result = await _regionAppService.CreateAsync(new CreateRegionDto
+        //         {
+        //             RegionDescription = "My new region"
+        //         }
+        //     );            
 
-            result.Id.ShouldBeGreaterThan(1);
-            result.RegionDescription.ShouldBe("My new region");
+        //     result.Id.ShouldBeGreaterThan(1);
+        //     result.RegionDescription.ShouldBe("My new region");
 
-        }
+        // }
     }
 }
