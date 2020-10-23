@@ -7,7 +7,7 @@ namespace AbpNorthwindTraders.Domain.Dtos
     public class TerritoryDto : FullAuditedEntityDto<string>
     {
         public string TerritoryDescription { get; set; }
-
         public int RegionId { get; set; }
+        public string RegionDescription { get; set; }
     }
 }

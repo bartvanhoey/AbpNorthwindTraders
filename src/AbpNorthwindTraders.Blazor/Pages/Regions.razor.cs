@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using AbpNorthwindTraders.Permissions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 
 namespace AbpNorthwindTraders.Blazor.Pages
 {

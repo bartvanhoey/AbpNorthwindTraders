@@ -2,69 +2,69 @@ using System.Collections.Generic;
 
 namespace AbpNorthwindTraders.Domain.DataSeeder.Data
 {
-    public static class TerritoryData
-    {
-        public readonly static List<Territory> Territories = new List<Territory>();
-        
-        public  static void GetTerritories()
-        {
-            Territories.AddRange(new[]
-            {
-                new Territory {Id = "01581", RegionId = 1, TerritoryDescription = "Westboro"},
-                new Territory {Id = "01730", RegionId = 1, TerritoryDescription = "Bedford"},
-                new Territory {Id = "01833", RegionId = 1, TerritoryDescription = "Georgetow"},
-                new Territory {Id = "02116", RegionId = 1, TerritoryDescription = "Boston"},
-                new Territory {Id = "02139", RegionId = 1, TerritoryDescription = "Cambridge"},
-                new Territory {Id = "02184", RegionId = 1, TerritoryDescription = "Braintree"},
-                new Territory {Id = "02903", RegionId = 1, TerritoryDescription = "Providence"},
-                new Territory {Id = "03049", RegionId = 3, TerritoryDescription = "Hollis"},
-                new Territory {Id = "03801", RegionId = 3, TerritoryDescription = "Portsmouth"},
-                new Territory {Id = "06897", RegionId = 1, TerritoryDescription = "Wilton"},
-                new Territory {Id = "07960", RegionId = 1, TerritoryDescription = "Morristown"},
-                new Territory {Id = "08837", RegionId = 1, TerritoryDescription = "Edison"},
-                new Territory {Id = "10019", RegionId = 1, TerritoryDescription = "New York"},
-                new Territory {Id = "10038", RegionId = 1, TerritoryDescription = "New York"},
-                new Territory {Id = "11747", RegionId = 1, TerritoryDescription = "Mellvile"},
-                new Territory {Id = "14450", RegionId = 1, TerritoryDescription = "Fairport"},
-                new Territory {Id = "19428", RegionId = 3, TerritoryDescription = "Philadelphia"},
-                new Territory {Id = "19713", RegionId = 1, TerritoryDescription = "Neward"},
-                new Territory {Id = "20852", RegionId = 1, TerritoryDescription = "Rockville"},
-                new Territory {Id = "27403", RegionId = 1, TerritoryDescription = "Greensboro"},
-                new Territory {Id = "27511", RegionId = 1, TerritoryDescription = "Cary"},
-                new Territory {Id = "29202", RegionId = 4, TerritoryDescription = "Columbia"},
-                new Territory {Id = "30346", RegionId = 4, TerritoryDescription = "Atlanta"},
-                new Territory {Id = "31406", RegionId = 4, TerritoryDescription = "Savannah"},
-                new Territory {Id = "32859", RegionId = 4, TerritoryDescription = "Orlando"},
-                new Territory {Id = "33607", RegionId = 4, TerritoryDescription = "Tampa"},
-                new Territory {Id = "40222", RegionId = 1, TerritoryDescription = "Louisville"},
-                new Territory {Id = "44122", RegionId = 3, TerritoryDescription = "Beachwood"},
-                new Territory {Id = "45839", RegionId = 3, TerritoryDescription = "Findlay"},
-                new Territory {Id = "48075", RegionId = 3, TerritoryDescription = "Southfield"},
-                new Territory {Id = "48084", RegionId = 3, TerritoryDescription = "Troy"},
-                new Territory {Id = "48304", RegionId = 3, TerritoryDescription = "Bloomfield Hills"},
-                new Territory {Id = "53404", RegionId = 3, TerritoryDescription = "Racine"},
-                new Territory {Id = "55113", RegionId = 3, TerritoryDescription = "Roseville"},
-                new Territory {Id = "55439", RegionId = 3, TerritoryDescription = "Minneapolis"},
-                new Territory {Id = "60179", RegionId = 2, TerritoryDescription = "Hoffman Estates"},
-                new Territory {Id = "60601", RegionId = 2, TerritoryDescription = "Chicago"},
-                new Territory {Id = "72716", RegionId = 4, TerritoryDescription = "Bentonville"},
-                new Territory {Id = "75234", RegionId = 4, TerritoryDescription = "Dallas"},
-                new Territory {Id = "78759", RegionId = 4, TerritoryDescription = "Austin"},
-                new Territory {Id = "80202", RegionId = 2, TerritoryDescription = "Denver"},
-                new Territory {Id = "80909", RegionId = 2, TerritoryDescription = "Colorado Springs"},
-                new Territory {Id = "85014", RegionId = 2, TerritoryDescription = "Phoenix"},
-                new Territory {Id = "85251", RegionId = 2, TerritoryDescription = "Scottsdale"},
-                new Territory {Id = "90405", RegionId = 2, TerritoryDescription = "Santa Monica"},
-                new Territory {Id = "94025", RegionId = 2, TerritoryDescription = "Menlo Park"},
-                new Territory {Id = "94105", RegionId = 2, TerritoryDescription = "San Francisco"},
-                new Territory {Id = "95008", RegionId = 2, TerritoryDescription = "Campbell"},
-                new Territory {Id = "95054", RegionId = 2, TerritoryDescription = "Santa Clara"},
-                new Territory {Id = "95060", RegionId = 2, TerritoryDescription = "Santa Cruz"},
-                new Territory {Id = "98004", RegionId = 2, TerritoryDescription = "Bellevue"},
-                new Territory {Id = "98052", RegionId = 2, TerritoryDescription = "Redmond"},
-                new Territory {Id = "98104", RegionId = 2, TerritoryDescription = "Seattle"}
-            });
-        }
+  public static class TerritoryData
+  {
+    public readonly static List<Territory> Territories = new List<Territory>();
 
+    public static void GetTerritories()
+    {
+      Territories.AddRange(new[]
+      {
+                new Territory("01581",  "Westboro", 1),
+                new Territory("01730",  "Bedford", 1),
+                new Territory("01833",  "Georgetow", 1),
+                new Territory("02116",  "Boston", 1),
+                new Territory("02139",  "Cambridge", 1),
+                new Territory("02184",  "Braintree", 1),
+                new Territory("02903",  "Providence", 1),
+                new Territory("03049",  "Hollis", 3),
+                new Territory("03801",  "Portsmouth", 3),
+                new Territory("06897",  "Wilton", 1),
+                new Territory("07960",  "Morristown", 1),
+                new Territory("08837",  "Edison", 1),
+                new Territory("10019",  "New York", 1),
+                new Territory("10038",  "New York", 1),
+                new Territory("11747",  "Mellvile", 1),
+                new Territory("14450",  "Fairport", 1),
+                new Territory("19428",  "Philadelphia", 3),
+                new Territory("19713",  "Neward", 1),
+                new Territory("20852",  "Rockville", 1),
+                new Territory("27403",  "Greensboro", 1),
+                new Territory("27511",  "Cary", 1),
+                new Territory("29202",  "Columbia", 4),
+                new Territory("30346",  "Atlanta", 4),
+                new Territory("31406",  "Savannah", 4),
+                new Territory("32859",  "Orlando", 4),
+                new Territory("33607",  "Tampa", 4),
+                new Territory("40222",  "Louisville", 1),
+                new Territory("44122",  "Beachwood", 3),
+                new Territory("45839",  "Findlay", 3),
+                new Territory("48075",  "Southfield", 3),
+                new Territory("48084",  "Troy", 3),
+                new Territory("48304",  "Bloomfield Hills", 3),
+                new Territory("53404",  "Racine", 3),
+                new Territory("55113",  "Roseville", 3),
+                new Territory("55439",  "Minneapolis", 3),
+                new Territory("60179",  "Hoffman Estates", 2),
+                new Territory("60601",  "Chicago", 2),
+                new Territory("72716",  "Bentonville", 4),
+                new Territory("75234",  "Dallas", 4),
+                new Territory("78759",  "Austin", 4),
+                new Territory("80202",  "Denver", 2),
+                new Territory("80909",  "Colorado Springs", 2),
+                new Territory("85014",  "Phoenix", 2),
+                new Territory("85251",  "Scottsdale", 2),
+                new Territory("90405",  "Santa Monica", 2),
+                new Territory("94025",  "Menlo Park", 2),
+                new Territory("94105",  "San Francisco", 2),
+                new Territory("95008",  "Campbell", 2),
+                new Territory("95054",  "Santa Clara", 2),
+                new Territory("95060",  "Santa Cruz", 2),
+                new Territory("98004",  "Bellevue", 2),
+                new Territory("98052",  "Redmond", 2),
+                new Territory("98104",  "Seattle", 2),
+            });
     }
+
+  }
 }

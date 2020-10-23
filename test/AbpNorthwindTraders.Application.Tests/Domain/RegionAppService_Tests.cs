@@ -15,14 +15,14 @@ namespace AbpNorthwindTraders.Domain
             _regionAppService = GetRequiredService<IRegionAppService>();
         }
 
-        // [Fact]
-        // public async Task Should_Get_A_List_Of_Regions()
-        // {
-        //     var result = await _regionAppService.GetListAsync(new PagedAndSortedResultRequestDto());
+        [Fact]
+        public async Task Should_Get_A_List_Of_Regions()
+        {
+            var result = await _regionAppService.GetListAsync(new PagedAndSortedResultRequestDto());
 
-        //     result.TotalCount.ShouldBeGreaterThan(0);
-        //     result.Items.ShouldContain(r => r.RegionDescription == "Southern");
-        // }
+            result.TotalCount.ShouldBeGreaterThan(0);
+            result.Items.ShouldContain(r => r.RegionDescription == "Southern");
+        }
 
         // [Fact]
         // public async Task Should_Create_A_Valid_Region()

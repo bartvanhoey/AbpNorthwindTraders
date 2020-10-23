@@ -24,26 +24,26 @@ namespace AbpNorthwindTraders.EntityFrameworkCore
 
       builder.Entity<Employee>(b =>
     {
-        b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "Employees", AbpNorthwindTradersConsts.DbSchema);
-        b.ConfigureByConvention();
-        b.Property(e => e.Id).HasColumnName("EmployeeID");
-        b.Property(e => e.Address).HasMaxLength(EmployeeConsts.MaxLengthAddress);
-        b.Property(e => e.BirthDate).HasColumnType("datetime");
-        b.Property(e => e.City).HasMaxLength(EmployeeConsts.MaxLengthCity);
-        b.Property(e => e.Country).HasMaxLength(EmployeeConsts.MaxLengthCountry);
-        b.Property(e => e.Extension).HasMaxLength(EmployeeConsts.MaxLengthExtension);
-        b.Property(e => e.FirstName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthFirstName);
-        b.Property(e => e.HireDate).HasColumnType("datetime");
-        b.Property(e => e.HomePhone).HasMaxLength(EmployeeConsts.MaxLengthHomePhone);
-        b.Property(e => e.LastName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthLastName);
-        b.Property(e => e.Notes).HasColumnType("ntext");
-        b.Property(e => e.Photo).HasColumnType("image");
-        b.Property(e => e.PhotoPath).HasMaxLength(EmployeeConsts.MaxLengthPhotoPath);
-        b.Property(e => e.PostalCode).HasMaxLength(EmployeeConsts.MaxLengthPostalCode);
-        b.Property(e => e.Region).HasMaxLength(EmployeeConsts.MaxLengthRegion);
-        b.Property(e => e.Title).HasMaxLength(EmployeeConsts.MaxLengthTitle);
-        b.HasOne(d => d.Manager).WithMany(p => p.DirectReports).HasForeignKey(d => d.ReportsTo)
-                .HasConstraintName("FK_Employees_Employees");
+      b.ToTable(AbpNorthwindTradersConsts.DbTablePrefix + "Employees", AbpNorthwindTradersConsts.DbSchema);
+      b.ConfigureByConvention();
+      b.Property(e => e.Id).HasColumnName("EmployeeID");
+      b.Property(e => e.Address).HasMaxLength(EmployeeConsts.MaxLengthAddress);
+      b.Property(e => e.BirthDate).HasColumnType("datetime");
+      b.Property(e => e.City).HasMaxLength(EmployeeConsts.MaxLengthCity);
+      b.Property(e => e.Country).HasMaxLength(EmployeeConsts.MaxLengthCountry);
+      b.Property(e => e.Extension).HasMaxLength(EmployeeConsts.MaxLengthExtension);
+      b.Property(e => e.FirstName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthFirstName);
+      b.Property(e => e.HireDate).HasColumnType("datetime");
+      b.Property(e => e.HomePhone).HasMaxLength(EmployeeConsts.MaxLengthHomePhone);
+      b.Property(e => e.LastName).IsRequired().HasMaxLength(EmployeeConsts.MaxLengthLastName);
+      b.Property(e => e.Notes).HasColumnType("ntext");
+      b.Property(e => e.Photo).HasColumnType("image");
+      b.Property(e => e.PhotoPath).HasMaxLength(EmployeeConsts.MaxLengthPhotoPath);
+      b.Property(e => e.PostalCode).HasMaxLength(EmployeeConsts.MaxLengthPostalCode);
+      b.Property(e => e.Region).HasMaxLength(EmployeeConsts.MaxLengthRegion);
+      b.Property(e => e.Title).HasMaxLength(EmployeeConsts.MaxLengthTitle);
+      b.HasOne(d => d.Manager).WithMany(p => p.DirectReports).HasForeignKey(d => d.ReportsTo)
+              .HasConstraintName("FK_Employees_Employees");
     });
 
 
