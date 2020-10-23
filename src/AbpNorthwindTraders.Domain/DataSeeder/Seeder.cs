@@ -33,7 +33,7 @@ namespace AbpNorthwindTraders.Domain.DataSeeder
 
         public async Task SeedAsync(DataSeedContext context)
         {
-            //  Seed Regions
+            // Seed Regions
             if (await _regionRepository.GetCountAsync() <= 0)
             {
                 var regions = RegionData.GetRegions();
@@ -43,13 +43,13 @@ namespace AbpNorthwindTraders.Domain.DataSeeder
                 }
             }
 
-            //   Seed Territories
+            // Seed Territories
             if (await _territoryRepository.GetCountAsync() <= 0)
             {
                 TerritoryData.GetTerritories();
                 foreach (var territory in TerritoryData.Territories)
                 {
-                    await _territoryRepository.InsertAsync(territory, autoSave: true);
+                    await _territoryRepository.InsertAsync(territory);
                 }
             }
 
