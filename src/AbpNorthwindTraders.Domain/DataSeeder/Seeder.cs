@@ -44,7 +44,7 @@ namespace AbpNorthwindTraders.Domain.DataSeeder
       }
 
       //   Seed Territories
-      if (await _regionRepository.GetCountAsync() <= 0)
+      if (await _territoryRepository.GetCountAsync() <= 0)
       {
         TerritoryData.AddTerritories();
         foreach (var territory in TerritoryData.Territories)
