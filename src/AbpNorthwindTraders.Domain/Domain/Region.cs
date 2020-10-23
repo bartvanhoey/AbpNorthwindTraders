@@ -8,7 +8,6 @@ namespace AbpNorthwindTraders.Domain
 {
   public class Region : FullAuditedEntity<int>, IMultiTenant
   {
-    public new int Id { get; set; }
     public string RegionDescription { get; set; }
     public ICollection<Territory> Territories { get; private set; }
     public Guid? TenantId { get; }
@@ -18,14 +17,8 @@ namespace AbpNorthwindTraders.Domain
       Territories = new HashSet<Territory>();
     }
 
-    public Region(
-        int id,
-        string regionDescription,
-        ICollection<Territory> territories,
-        Guid? tenantId
-    ) : base(id)
+    public Region(string regionDescription, ICollection<Territory> territories, Guid? tenantId)
     {
-      Id = id;
       RegionDescription = regionDescription;
       Territories = territories;
       TenantId = tenantId;
