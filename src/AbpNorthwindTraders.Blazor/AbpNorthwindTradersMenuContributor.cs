@@ -34,6 +34,12 @@ namespace AbpNorthwindTraders.Blazor
         northwindTradersMenu.AddItem(regionsMenu);
       }
 
+      if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Territory.Default))
+      {
+        var territoriesMenu = new ApplicationMenuItem("TerritoriesMenu", l["Menu:Territory"], url: "/territories");
+        northwindTradersMenu.AddItem(territoriesMenu);
+      }
+
       context.Menu.AddItem(northwindTradersMenu);
 
 

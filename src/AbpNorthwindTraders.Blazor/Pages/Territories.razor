@@ -1,0 +1,137 @@
+@page "/territories"
+
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<ITerritoryAppService, TerritoryDto, string, PagedAndSortedResultRequestDto,
+CreateTerritoryDto, UpdateTerritoryDto>
+
+<Card>
+  <CardHeader>
+    <Row>
+      <Column ColumnSize="ColumnSize.Is6">
+        <h2>@L["Territories"]</h2>
+      </Column>
+      <Column ColumnSize="ColumnSize.Is6">
+        <Paragraph Alignment="TextAlignment.Right">
+          @if (canCreateTerritory)
+          {
+            <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewTerritory"]</Button>
+          }
+        </Paragraph>
+      </Column>
+    </Row>
+  </CardHeader>
+
+  <CardBody>
+    <DataGrid TItem="TerritoryDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount" ShowPager="true" PageSize="PageSize">
+      <DataGridColumns>
+        <DataGridColumn Width="150px" TItem="TerritoryDto" Field="@nameof(TerritoryDto.Id)" Sortable="true" Caption="@L["Actions"]">
+          <DisplayTemplate>
+            <Dropdown>
+              <DropdownToggle Color="Color.Primary">
+                @L["Actions"]
+              </DropdownToggle>
+              <DropdownMenu>
+                @if (canUpdateTerritory)
+                {
+                  <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                    @L["Edit"]
+                  </DropdownItem>  
+                }
+                @if (canDeleteTerritory)
+                {
+                  <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                    @L["Delete"]
+                  </DropdownItem>  
+                }
+              </DropdownMenu>
+            </Dropdown>
+          </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn TItem="TerritoryDto" Field="@nameof(TerritoryDto.Id)" Caption="@L["TerritoryId"]">
+        </DataGridColumn>
+        <DataGridColumn TItem="TerritoryDto" Field="@nameof(TerritoryDto.TerritoryDescription)" Caption="@L["TerritoryDescription"]"></DataGridColumn>
+        @* <DataGridColumn TItem="TerritoryDto" Field="@nameof(TerritoryDto.RegionId)" Caption="@L["TerritoryRegionId"]"></DataGridColumn> *@
+        <DataGridColumn TItem="TerritoryDto" Field="@nameof(TerritoryDto.RegionDescription)"Caption="@L["RegionDescription"]"></DataGridColumn>
+      </DataGridColumns>
+    </DataGrid>
+  </CardBody>
+</Card>
+
+<Modal @ref="CreateModal">
+  <ModalBackdrop />
+  <ModalContent IsCentered="true">
+    <ModalHeader>
+      <ModalTitle>@L["NewTerritory"]</ModalTitle>
+      <CloseButton Clicked="CloseCreateModalAsync" />
+    </ModalHeader>
+    <ModalBody>
+      <Field>
+        <FieldLabel>@L["TerritoryId"]</FieldLabel>
+        <TextEdit @bind-text="NewEntity.Id" />
+      </Field>
+      <Field>
+        <FieldLabel>@L["TerritoryDescription"]</FieldLabel>
+        <TextEdit @bind-text="NewEntity.TerritoryDescription" />
+      </Field>
+      <Field>
+          <FieldLabel>@L["Region"]</FieldLabel>
+          <Select TValue="int" @bind-SelectedValue="@NewEntity.RegionId">
+              <SelectItem TValue="int" Value="-1">@L["PickARegion"]</SelectItem>
+              @foreach (var region in regionList)
+              {
+                  <SelectItem TValue="int" Value="@region.Id">
+                      @region.RegionDescription
+                  </SelectItem>
+              }
+              </Select>
+      </Field>
+    </ModalBody>
+    <ModalFooter>
+      <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+      <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+<Modal @ref="EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>@EditingEntity.TerritoryDescription</ModalTitle>
+            <CloseButton Clicked="CloseEditModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+          <Field>
+            <FieldLabel>@L["TerritoryId"]</FieldLabel>
+            <TextEdit @bind-text="EditingEntity.Id" />
+          </Field>
+          <Field>
+            <FieldLabel>@L["TerritoryDescription"]</FieldLabel>
+            <TextEdit @bind-text="EditingEntity.TerritoryDescription" />
+          </Field>
+          <Field>
+            <FieldLabel>@L["Region"]</FieldLabel>
+            <Select TValue="int" @bind-SelectedValue="@EditingEntity.RegionId">
+                <SelectItem TValue="int" Value="-1">@L["PickARegion"]</SelectItem>
+                @foreach (var region in regionList)
+                {
+                    <SelectItem TValue="int" Value="@region.Id">
+                        @region.RegionDescription
+                    </SelectItem>
+                }
+                </Select>
+          </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary"
+                    Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary"
+                    Clicked="UpdateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

@@ -10,6 +10,7 @@ namespace AbpNorthwindTraders.Blazor
             //Define your AutoMapper configuration here for the Blazor project.
 
             CreateMap<RegionDto, UpdateRegionDto>();
+            CreateMap<TerritoryDto, UpdateTerritoryDto>();
         }
     }
 }

@@ -38,6 +38,8 @@ namespace AbpNorthwindTraders
             CreateMap<Order, OrderDto>();
             CreateMap<CreateOrderDto, Order>(MemberList.Source);
             CreateMap<UpdateOrderDto, Order>(MemberList.Source);
+
+            CreateMap<Region,RegionLookupDto>();
         }
     }
 }

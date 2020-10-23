@@ -7,7 +7,7 @@ namespace AbpNorthwindTraders.Domain
 {
   public class Territory : FullAuditedEntity<string>, IMultiTenant
   {
-    public new string Id { get; set; }
+    // public new string Id { get; set; }
     public string TerritoryDescription { get; set; }
     public int RegionId { get; set; }
     public Region Region { get; set; }
@@ -16,6 +16,13 @@ namespace AbpNorthwindTraders.Domain
     public Territory()
     {
       EmployeeTerritories = new HashSet<EmployeeTerritory>();
+    }
+
+    public Territory(string id, string territoryDescription, int regionId)
+    {
+      Id = id;
+      TerritoryDescription = territoryDescription;
+      RegionId = regionId;
     }
 
     public Territory(
