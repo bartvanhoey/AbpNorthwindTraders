@@ -1,0 +1,93 @@
+@page "/regions"
+
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<IRegionAppService, RegionDto, int, PagedAndSortedResultRequestDto, CreateRegionDto,
+UpdateRegionDto>
+
+<Card>
+    <CardHeader>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <h2>@L["Regions"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Paragraph Alignment="TextAlignment.Right">
+                    <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewRegion"]</Button>
+                </Paragraph>
+            </Column>
+        </Row>
+    </CardHeader>
+
+    <CardBody>
+        <DataGrid TItem="RegionDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+ShowPager="true" PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn Width="150px" TItem="RegionDto" Field="@nameof(RegionDto.Id)" Sortable="false"
+Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                    @L["Edit"]
+                                </DropdownItem>
+                                <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                    @L["Delete"]
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="RegionDto" Field="@nameof(RegionDto.RegionDescription)"
+Caption="@L["RegionDescription"]"></DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<Modal @ref="CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>@L["NewRegion"]</ModalTitle>
+            <CloseButton Clicked="CloseCreateModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>@L["Name"]</FieldLabel>
+                <TextEdit @bind-text="NewEntity.RegionDescription" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>@EditingEntity.RegionDescription</ModalTitle>
+            <CloseButton Clicked="CloseEditModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>@L["RegionDescription"]</FieldLabel>
+                <TextEdit @bind-text="EditingEntity.RegionDescription" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

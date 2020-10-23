@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AbpNorthwindTraders.Domain.Dtos;
+using AutoMapper;
 
 namespace AbpNorthwindTraders.Blazor
 {
@@ -7,6 +8,8 @@ namespace AbpNorthwindTraders.Blazor
         public AbpNorthwindTradersBlazorAutoMapperProfile()
         {
             //Define your AutoMapper configuration here for the Blazor project.
+
+            CreateMap<RegionDto, UpdateRegionDto>();
         }
     }
 }
