@@ -6,7 +6,7 @@ namespace AbpNorthwindTraders.Domain.DataSeeder.Data
     {
         public readonly static List<Territory> Territories = new List<Territory>();
         
-        public  static void AddTerritories()
+        public  static void GetTerritories()
         {
             Territories.AddRange(new[]
             {

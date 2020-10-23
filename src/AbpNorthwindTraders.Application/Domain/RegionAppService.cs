@@ -20,6 +20,13 @@ namespace AbpNorthwindTraders.Domain
         public RegionAppService(IRegionRepository repository) : base(repository)
         {
             _repository = repository;
+
+            	GetPolicyName = AbpNorthwindTradersPermissions.Region.Default;
+                GetListPolicyName = AbpNorthwindTradersPermissions.Region.Default;
+                CreatePolicyName = AbpNorthwindTradersPermissions.Region.Create;
+                UpdatePolicyName = AbpNorthwindTradersPermissions.Region.Update;
+                DeletePolicyName = AbpNorthwindTradersPermissions.Region.Delete;
+
         }
     }
 }

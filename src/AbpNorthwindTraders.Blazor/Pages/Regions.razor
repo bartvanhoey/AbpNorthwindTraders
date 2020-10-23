@@ -17,30 +17,37 @@ UpdateRegionDto>
             </Column>
             <Column ColumnSize="ColumnSize.Is6">
                 <Paragraph Alignment="TextAlignment.Right">
-                    <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewRegion"]</Button>
+                    @if (canCreateRegion)
+                    {
+                        <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewRegion"]</Button>
+                    }
                 </Paragraph>
             </Column>
         </Row>
     </CardHeader>
 
     <CardBody>
-        <DataGrid TItem="RegionDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
-ShowPager="true" PageSize="PageSize">
+        <DataGrid TItem="RegionDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount" ShowPager="true" PageSize="PageSize">
             <DataGridColumns>
-                <DataGridColumn Width="150px" TItem="RegionDto" Field="@nameof(RegionDto.Id)" Sortable="false"
-Caption="@L["Actions"]">
+                <DataGridColumn Width="150px" TItem="RegionDto" Field="@nameof(RegionDto.Id)" Sortable="true" Caption="@L["Actions"]">
                     <DisplayTemplate>
                         <Dropdown>
                             <DropdownToggle Color="Color.Primary">
                                 @L["Actions"]
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
-                                    @L["Edit"]
-                                </DropdownItem>
-                                <DropdownItem Clicked="() => DeleteEntityAsync(context)">
-                                    @L["Delete"]
-                                </DropdownItem>
+                                @if (canUpdateRegion)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (canDeleteRegion)
+                                {
+                                    <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
                             </DropdownMenu>
                         </Dropdown>
                     </DisplayTemplate>
