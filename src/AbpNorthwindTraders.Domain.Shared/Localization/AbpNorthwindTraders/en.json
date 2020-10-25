@@ -33,7 +33,7 @@
     "TerritoryDeletionConfirmationMessage": "Are you sure to delete the territory {0}?",
     "PickARegion": "Pick a region",
     "Permission:Employee": "Employee",
-    "Menu:Employee": "MenuEmployee",
+    "Menu:Employee": "Employees",
     "Employee": "Employee",
     "EmployeeLastName": "EmployeeLastName",
     "EmployeeFirstName": "EmployeeFirstName",
@@ -161,8 +161,9 @@
     "NewRegion": "New region",
     "RegionDescription": "Region description",
     "Edit": "Edit",
-    "Delete": "Delete"
-
+    "Delete": "Delete",
+    "FirstName": "First Name",
+    "NewEmployee": "New employee"
 
   }
 }
