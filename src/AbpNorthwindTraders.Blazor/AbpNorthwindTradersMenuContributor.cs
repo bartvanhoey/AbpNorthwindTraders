@@ -45,6 +45,13 @@ namespace AbpNorthwindTraders.Blazor
         var employeesMenu = new ApplicationMenuItem("EmployeesMenu", l["Menu:Employee"], url: "/employees");
         northwindTradersMenu.AddItem(employeesMenu);
       }
+      
+      if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Customer.Default))
+      {
+        var customersMenu = new ApplicationMenuItem("CustomersMenu", l["Menu:Customer"], url: "/customers");
+        northwindTradersMenu.AddItem(customersMenu);
+      }
+
 
       context.Menu.AddItem(northwindTradersMenu);
 

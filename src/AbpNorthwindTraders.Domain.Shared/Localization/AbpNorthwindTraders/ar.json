@@ -21,7 +21,7 @@
     "Menu:Territory": "MenuTerritory",
     "Territory": "Territory",
     "TerritoryId": "TerritoryId",
-    "TerritoryTerritoryDescription": "TerritoryTerritoryDescription",
+    "TerritoryDescription": "TerritoryDescription",
     "TerritoryRegionId": "TerritoryRegionId",
     "TerritoryRegion": "TerritoryRegion",
     "TerritoryEmployeeTerritories": "TerritoryEmployeeTerritories",

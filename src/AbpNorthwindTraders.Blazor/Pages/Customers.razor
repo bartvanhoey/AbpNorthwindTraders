@@ -1,0 +1,200 @@
+@page "/customers"
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<ICustomerAppService, CustomerDto, string, PagedAndSortedResultRequestDto, CreateCustomerDto, UpdateCustomerDto>
+
+<Card>
+    <CardHeader>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <h2>@L["Customers"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Paragraph Alignment="TextAlignment.Right">
+                    @if (canCreateCustomer)
+                                        {
+                                            <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewCustomer"]</Button>
+                                        }
+                                        </Paragraph>
+                                    </Column>
+                                </Row>
+                            </CardHeader>
+
+                            <CardBody>
+                                <DataGrid TItem="CustomerDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+                        ShowPager="true" PageSize="PageSize">
+                                    <DataGridColumns>
+                                        <DataGridColumn Width="150px" TItem="CustomerDto" Field="@nameof(CustomerDto.Id)" Sortable="true"
+                        Caption="@L["Actions"]">
+                                            <DisplayTemplate>
+                                                <Dropdown>
+                                                    <DropdownToggle Color="Color.Primary">
+                                                        @L["Actions"]
+                                                    </DropdownToggle>
+                                                    <DropdownMenu>
+                                                        @if (canUpdateCustomer)
+                                                        {
+                                                            <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                                                @L["Edit"]
+                                                            </DropdownItem>
+                                                        }
+                                                            @if (canDeleteCustomer)
+                                                        {
+                                                            <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                                                @L["Delete"]
+                                                            </DropdownItem>
+                                                        }
+                                                        </DropdownMenu>
+                                                    </Dropdown>
+                                                </DisplayTemplate>
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.Id)" Caption="@L["CustomerId"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.CompanyName)" Caption="@L["CustomerCompanyName"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.ContactName)" Caption="@L["CustomerContactName"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.ContactTitle)"Caption="@L["CustomerContactTitle"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.City)" Caption="@L["CustomerCity"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.Country)" Caption="@L["CustomerCountry"]"></DataGridColumn>
+                                            <DataGridColumn TItem="CustomerDto" Field="@nameof(CustomerDto.Phone)" Caption="@L["CustomerPhone"]">
+                                            </DataGridColumn>
+                                        </DataGridColumns>
+                                    </DataGrid>
+                                </CardBody>
+                            </Card>
+
+<Modal @ref="CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.Large">
+        <ModalHeader>
+            <ModalTitle>@L["NewCustomer"]</ModalTitle>
+            <CloseButton Clicked="CloseCreateModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+            <Row>
+                <Column ColumnSize="ColumnSize.Is6">
+                    <Field>
+                        <FieldLabel>@L["CustomerId"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Id" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCompanyName"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.CompanyName" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerContactName"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.ContactName" />
+                    </Field>
+                    <Field>
+                      <FieldLabel>@L["CustomerContactTitle"]</FieldLabel>
+                      <TextEdit @bind-text="NewEntity.ContactTitle" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerPhone"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Phone" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerFax"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Fax" />
+                    </Field>
+                </Column>
+                <Column ColumnSize="ColumnSize.Is6">
+                    <Field>
+                        <FieldLabel>@L["CustomerAddress"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Address" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCity"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.City" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerRegion"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Region" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerPostalCode"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.PostalCode" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCountry"]</FieldLabel>
+                        <TextEdit @bind-text="NewEntity.Country" />
+                    </Field>
+                </Column>
+            </Row>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+
+
+<Modal @ref="EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.Large">
+        <ModalHeader>
+            <ModalTitle>@EditingEntity.CompanyName</ModalTitle>
+            <CloseButton Clicked="CloseEditModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+                <Row>
+                <Column ColumnSize="ColumnSize.Is6">
+                    <Field>
+                        <FieldLabel>@L["CustomerId"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Id" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCompanyName"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.CompanyName" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerContactName"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.ContactName" />
+                    </Field>
+                    <Field>
+                      <FieldLabel>@L["CustomerContactTitle"]</FieldLabel>
+                      <TextEdit @bind-text="EditingEntity.ContactTitle" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerPhone"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Phone" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerFax"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Fax" />
+                    </Field>
+                </Column>
+                <Column ColumnSize="ColumnSize.Is6">
+                    <Field>
+                        <FieldLabel>@L["CustomerAddress"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Address" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCity"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.City" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerRegion"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Region" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerPostalCode"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.PostalCode" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["CustomerCountry"]</FieldLabel>
+                        <TextEdit @bind-text="EditingEntity.Country" />
+                    </Field>
+                </Column>
+            </Row>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

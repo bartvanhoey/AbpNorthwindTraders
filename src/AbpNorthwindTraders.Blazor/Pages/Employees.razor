@@ -3,8 +3,6 @@
 @using Volo.Abp.BlazoriseUI
 @using AbpNorthwindTraders.Domain
 @using AbpNorthwindTraders.Localization
-@using AbpNorthwindTraders.Permissions
-@using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<AbpNorthwindTradersResource> L
 @inherits AbpCrudPageBase<IEmployeeAppService, EmployeeDto, int, PagedAndSortedResultRequestDto, CreateEmployeeDto,
@@ -55,19 +53,17 @@ UpdateEmployeeDto>
                                                     </Dropdown>
                                                 </DisplayTemplate>
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.FirstName)" Caption="@L["FirstName"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.FirstName)" Caption="@L["EmployeeFirstName"]">
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.LastName)" Caption="@L["LastName"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.LastName)" Caption="@L["EmployeeLastName"]">
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["EmployeeTitle"]">
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.ManagerName)" Caption="@L["EmployeeManager"]">
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.ManagerName)" Caption="@L["Manager"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.HireDate)" Caption="@L["EmployeeHireDate"]">
                                             </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.HireDate)" Caption="@L["HireDate"]">
-                                            </DataGridColumn>
-                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Extension)" Caption="@L["Extension"]">
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Extension)" Caption="@L["EmployeeExtension"]">
                                             </DataGridColumn>
                                         </DataGridColumns>
                                     </DataGrid>
@@ -85,31 +81,31 @@ UpdateEmployeeDto>
         <Row>
             <Column ColumnSize="ColumnSize.Is6">
                 <Field>
-                    <FieldLabel>@L["FirstName"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeFirstName"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.FirstName" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["LastName"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeLastName"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.LastName" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Title"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeTitle"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.Title" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["TitleOfCourtesy"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeTitleOfCourtesy"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.TitleOfCourtesy" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["BirthDate"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeBirthDate"]</FieldLabel>
                     <DateEdit TValue="DateTime?" @bind-Date="NewEntity.BirthDate" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["HireDate"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeHireDate"]</FieldLabel>
                     <DateEdit TValue="DateTime?" @bind-Date="NewEntity.HireDate" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Reports to"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeReportsTo"]</FieldLabel>
                     <Select TValue="int?" @bind-SelectedValue="@NewEntity.ReportsTo">
                         <SelectItem TValue="int?" Value="-1">@L["ReportsTo"]</SelectItem>
                             @foreach (var manager in managerList)
@@ -123,31 +119,31 @@ UpdateEmployeeDto>
             </Column>
             <Column ColumnSize="ColumnSize.Is6">
                 <Field>
-                    <FieldLabel>@L["Address"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeAddress"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.Address" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["City"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeCity"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.City" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Region"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeRegion"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.Region" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["PostalCode"]</FieldLabel>
+                    <FieldLabel>@L["EmployeePostalCode"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.PostalCode" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Country"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeCountry"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.Country" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["HomePhone"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeHomePhone"]</FieldLabel>
                     <TextEdit @bind-text="NewEntity.HomePhone" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Notes"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeNotes"]</FieldLabel>
                     <MemoEdit @bind-text="NewEntity.Notes" />
                 </Field>
             </Column>
@@ -172,31 +168,31 @@ UpdateEmployeeDto>
         <Row>
             <Column ColumnSize="ColumnSize.Is6">
                 <Field>
-                    <FieldLabel>@L["FirstName"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeFirstName"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.FirstName" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["LastName"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeLastName"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.LastName" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Title"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeTitle"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.Title" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["TitleOfCourtesy"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeTitleOfCourtesy"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.TitleOfCourtesy" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["BirthDate"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeBirthDate"]</FieldLabel>
                     <DateEdit TValue="DateTime?" @bind-Date="EditingEntity.BirthDate" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["HireDate"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeHireDate"]</FieldLabel>
                     <DateEdit TValue="DateTime?" @bind-Date="EditingEntity.HireDate" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Reports to"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeReportsTo"]</FieldLabel>
                     <Select TValue="int?" @bind-SelectedValue="@EditingEntity.ReportsTo">
                         <SelectItem TValue="int?" Value="-1">@L["ReportsTo"]</SelectItem>
                             @foreach (var manager in managerList)
@@ -210,31 +206,31 @@ UpdateEmployeeDto>
             </Column>
             <Column ColumnSize="ColumnSize.Is6">
                 <Field>
-                    <FieldLabel>@L["Address"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeAddress"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.Address" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["City"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeCity"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.City" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Region"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeRegion"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.Region" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["PostalCode"]</FieldLabel>
+                    <FieldLabel>@L["EmployeePostalCode"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.PostalCode" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Country"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeCountry"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.Country" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["HomePhone"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeHomePhone"]</FieldLabel>
                     <TextEdit @bind-text="EditingEntity.HomePhone" />
                 </Field>
                 <Field>
-                    <FieldLabel>@L["Notes"]</FieldLabel>
+                    <FieldLabel>@L["EmployeeNotes"]</FieldLabel>
                     <MemoEdit @bind-text="EditingEntity.Notes" />
                 </Field>
             </Column>
