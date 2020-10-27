@@ -23,6 +23,7 @@ namespace AbpNorthwindTraders.Domain
         public byte[] Photo { get; set; }
         public string Notes { get; set; }
         public int? ReportsTo { get; set; }
+        // public string ManagerName { get; set; }
         public string PhotoPath { get; set; }
         public Guid? TenantId { get; }
         public Employee Manager { get; set; }

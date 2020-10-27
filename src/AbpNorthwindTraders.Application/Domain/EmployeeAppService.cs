@@ -3,6 +3,8 @@ using AbpNorthwindTraders.Permissions;
 using AbpNorthwindTraders.Domain.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AbpNorthwindTraders.Domain
 {
@@ -21,5 +23,13 @@ namespace AbpNorthwindTraders.Domain
         {
             _repository = repository;
         }
+
+    public async Task<ListResultDto<EmployeeLookupDto>> GetEmployeeLookupAsync()
+    {
+        var employees = await _repository.GetListAsync();
+        var map = ObjectMapper.Map<List<Employee>, List<EmployeeLookupDto>>(employees);
+        return new ListResultDto<EmployeeLookupDto>(map);
     }
+
+  }
 }

@@ -7,104 +7,151 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<AbpNorthwindTradersResource> L
-@inherits AbpCrudPageBase<IEmployeeAppService, EmployeeDto, int, PagedAndSortedResultRequestDto, CreateEmployeeDto, UpdateEmployeeDto>
+@inherits AbpCrudPageBase<IEmployeeAppService, EmployeeDto, int, PagedAndSortedResultRequestDto, CreateEmployeeDto,
+UpdateEmployeeDto>
 
 <Card>
     <CardHeader>
         <Row>
-          <Column ColumnSize="ColumnSize.Is6">
-              <h2>@L["Employees"]</h2>
-          </Column>
-          <Column ColumnSize="ColumnSize.Is6">
-              <Paragraph Alignment="TextAlignment.Right">
-                  @if (canCreateEmployee)
-                  {
-                      <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewEmployee"]</Button>
-                  }
-              </Paragraph>
-          </Column>
-        </Row>
-    </CardHeader>
+            <Column ColumnSize="ColumnSize.Is6">
+                <h2>@L["Employees"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Paragraph Alignment="TextAlignment.Right">
+                    @if (canCreateEmployee)
+                                        {
+                                            <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewEmployee"]</Button>
+                                        }
+                                        </Paragraph>
+                                    </Column>
+                                </Row>
+                            </CardHeader>
 
-    <CardBody>
-        <DataGrid TItem="EmployeeDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount" ShowPager="true" PageSize="PageSize">
-            <DataGridColumns>
-                <DataGridColumn Width="150px" TItem="EmployeeDto" Field="@nameof(EmployeeDto.Id)" Sortable="true" Caption="@L["Actions"]">
-                    <DisplayTemplate>
-                        <Dropdown>
-                            <DropdownToggle Color="Color.Primary">
-                                @L["Actions"]
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                @if (canUpdateEmployee)
-                                {
-                                    <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
-                                        @L["Edit"]
-                                    </DropdownItem>
-                                }
-                                @if (canDeleteEmployee)
-                                {
-                                    <DropdownItem Clicked="() => DeleteEntityAsync(context)">
-                                        @L["Delete"]
-                                    </DropdownItem>
-                                }
-                            </DropdownMenu>
-                        </Dropdown>
-                    </DisplayTemplate>
-                </DataGridColumn>
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.FirstName)" Caption="@L["FirstName"]"></DataGridColumn>
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.LastName)" Caption="@L["LastName"]"></DataGridColumn>
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]"></DataGridColumn>
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]"></DataGridColumn>
-                @* <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Manager)" Caption="@L["Manager"]"></DataGridColumn> *@
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.HireDate)" Caption="@L["HireDate"]"></DataGridColumn>
-                <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Extension)" Caption="@L["Extension"]"></DataGridColumn>
-            </DataGridColumns>
-        </DataGrid>
-    </CardBody>
-</Card>
+                            <CardBody>
+                                <DataGrid TItem="EmployeeDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+                        ShowPager="true" PageSize="PageSize">
+                                    <DataGridColumns>
+                                        <DataGridColumn Width="150px" TItem="EmployeeDto" Field="@nameof(EmployeeDto.Id)" Sortable="true"
+                        Caption="@L["Actions"]">
+                                            <DisplayTemplate>
+                                                <Dropdown>
+                                                    <DropdownToggle Color="Color.Primary">
+                                                        @L["Actions"]
+                                                    </DropdownToggle>
+                                                    <DropdownMenu>
+                                                        @if (canUpdateEmployee)
+                                                        {
+                                                            <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                                                @L["Edit"]
+                                                            </DropdownItem>
+                                                        }
+                                                            @if (canDeleteEmployee)
+                                                        {
+                                                            <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                                                @L["Delete"]
+                                                            </DropdownItem>
+                                                        }
+                                                        </DropdownMenu>
+                                                    </Dropdown>
+                                                </DisplayTemplate>
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.FirstName)" Caption="@L["FirstName"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.LastName)" Caption="@L["LastName"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Title)" Caption="@L["Title"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.ManagerName)" Caption="@L["Manager"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.HireDate)" Caption="@L["HireDate"]">
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="EmployeeDto" Field="@nameof(EmployeeDto.Extension)" Caption="@L["Extension"]">
+                                            </DataGridColumn>
+                                        </DataGridColumns>
+                                    </DataGrid>
+                                </CardBody>
+                            </Card>
 
 <Modal @ref="CreateModal">
-    <ModalBackdrop />
-    <ModalContent IsCentered="true">
-        <ModalHeader>
-            <ModalTitle>@L["NewEmployee"]</ModalTitle>
-            <CloseButton Clicked="CloseCreateModalAsync" />
-        </ModalHeader>
-        <ModalBody>
-            <Field>
-              <FieldLabel>@L["FirstName"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.FirstName" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["LastName"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.LastName" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["Title"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.Title" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["TitleOfCourtesy"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.TitleOfCourtesy" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["BirthDate"]</FieldLabel>
-              <DateEdit TValue="DateTime?" @bind-Date="NewEntity.BirthDate" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["HireDate"]</FieldLabel>
-              <DateEdit TValue="DateTime?" @bind-Date="NewEntity.HireDate" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["Country"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.Country" />
-            </Field>
-            <Field>
-              <FieldLabel>@L["Phone"]</FieldLabel>
-              <TextEdit @bind-text="NewEntity.HomePhone" />
-            </Field>
-        
+<ModalBackdrop />
+<ModalContent IsCentered="true" Size="ModalSize.Large">
+    <ModalHeader>
+        <ModalTitle>@L["NewEmployee"]</ModalTitle>
+        <CloseButton Clicked="CloseCreateModalAsync" />
+    </ModalHeader>
+    <ModalBody>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Field>
+                    <FieldLabel>@L["FirstName"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.FirstName" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["LastName"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.LastName" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Title"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.Title" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["TitleOfCourtesy"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.TitleOfCourtesy" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["BirthDate"]</FieldLabel>
+                    <DateEdit TValue="DateTime?" @bind-Date="NewEntity.BirthDate" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["HireDate"]</FieldLabel>
+                    <DateEdit TValue="DateTime?" @bind-Date="NewEntity.HireDate" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Reports to"]</FieldLabel>
+                    <Select TValue="int?" @bind-SelectedValue="@NewEntity.ReportsTo">
+                        <SelectItem TValue="int?" Value="-1">@L["ReportsTo"]</SelectItem>
+                            @foreach (var manager in managerList)
+                            {
+                                <SelectItem TValue="int?" Value="@manager.Id">
+                                    @manager.ManagerName
+                                </SelectItem>
+                            }
+                    </Select>
+                </Field>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Field>
+                    <FieldLabel>@L["Address"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.Address" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["City"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.City" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Region"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.Region" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["PostalCode"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.PostalCode" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Country"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.Country" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["HomePhone"]</FieldLabel>
+                    <TextEdit @bind-text="NewEntity.HomePhone" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Notes"]</FieldLabel>
+                    <MemoEdit @bind-text="NewEntity.Notes" />
+                </Field>
+            </Column>
+        </Row>
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
@@ -115,21 +162,87 @@
 
 
 <Modal @ref="EditModal">
-  <ModalBackdrop />
-  <ModalContent IsCentered="true">
-      <ModalHeader>
-          <ModalTitle>@EditingEntity.FirstName</ModalTitle>
-          <CloseButton Clicked="CloseEditModalAsync" />
-      </ModalHeader>
-      <ModalBody>
-          @* <Field> *@
-          @*   <FieldLabel>@L["Name"]</FieldLabel> *@
-          @*   <TextEdit @bind-text="EditingEntity.Name" /> *@
-          @* </Field> *@
-      </ModalBody>
-      <ModalFooter>
-          <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
-          <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
-      </ModalFooter>
-  </ModalContent>
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.Large">
+        <ModalHeader>
+            <ModalTitle>@EditingEntity.FirstName</ModalTitle>
+            <CloseButton Clicked="CloseEditModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Field>
+                    <FieldLabel>@L["FirstName"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.FirstName" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["LastName"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.LastName" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Title"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.Title" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["TitleOfCourtesy"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.TitleOfCourtesy" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["BirthDate"]</FieldLabel>
+                    <DateEdit TValue="DateTime?" @bind-Date="EditingEntity.BirthDate" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["HireDate"]</FieldLabel>
+                    <DateEdit TValue="DateTime?" @bind-Date="EditingEntity.HireDate" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Reports to"]</FieldLabel>
+                    <Select TValue="int?" @bind-SelectedValue="@EditingEntity.ReportsTo">
+                        <SelectItem TValue="int?" Value="-1">@L["ReportsTo"]</SelectItem>
+                            @foreach (var manager in managerList)
+                            {
+                                <SelectItem TValue="int?" Value="@manager.Id">
+                                    @manager.ManagerName
+                                </SelectItem>
+                            }
+                    </Select>
+                </Field>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Field>
+                    <FieldLabel>@L["Address"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.Address" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["City"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.City" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Region"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.Region" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["PostalCode"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.PostalCode" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Country"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.Country" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["HomePhone"]</FieldLabel>
+                    <TextEdit @bind-text="EditingEntity.HomePhone" />
+                </Field>
+                <Field>
+                    <FieldLabel>@L["Notes"]</FieldLabel>
+                    <MemoEdit @bind-text="EditingEntity.Notes" />
+                </Field>
+            </Column>
+        </Row>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
 </Modal>

@@ -2,7 +2,7 @@
 
 namespace AbpNorthwindTraders.Domain.Dtos
 {
-    public class RegionLookupDto  : EntityDto<int>
+  public class RegionLookupDto  : EntityDto<int>
     {
         public string RegionDescription { get; set; }
     }

@@ -14,12 +14,18 @@ namespace AbpNorthwindTraders
             CreateMap<Region, RegionDto>();
             CreateMap<CreateRegionDto, Region>(MemberList.Source);
             CreateMap<UpdateRegionDto, Region>(MemberList.Source);
+            CreateMap<Region,RegionLookupDto>();
+
             CreateMap<Territory, TerritoryDto>();
             CreateMap<CreateTerritoryDto, Territory>(MemberList.Source);
             CreateMap<UpdateTerritoryDto, Territory>(MemberList.Source);
+            
             CreateMap<Employee, EmployeeDto>();
             CreateMap<CreateEmployeeDto, Employee>(MemberList.Source);
             CreateMap<UpdateEmployeeDto, Employee>(MemberList.Source);
+            CreateMap<Employee,EmployeeLookupDto>()
+                .ForMember(x => x.ManagerName, src => src.MapFrom(e => e.FirstName + " " + e.LastName));
+            
             CreateMap<Customer, CustomerDto>();
             CreateMap<CreateCustomerDto, Customer>(MemberList.Source);
             CreateMap<UpdateCustomerDto, Customer>(MemberList.Source);
@@ -39,7 +45,6 @@ namespace AbpNorthwindTraders
             CreateMap<CreateOrderDto, Order>(MemberList.Source);
             CreateMap<UpdateOrderDto, Order>(MemberList.Source);
 
-            CreateMap<Region,RegionLookupDto>();
         }
     }
 }
