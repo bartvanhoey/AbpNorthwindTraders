@@ -58,6 +58,14 @@ namespace AbpNorthwindTraders.Blazor
         northwindTradersMenu.AddItem(suppliersMenu);
       }
 
+      // using AbpNorthwindTraders.Permissions;
+      // "Menu:Category": "MenuCategory", 
+      if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Category.Default))
+      {
+        var categoriesMenu = new ApplicationMenuItem("CategoriesMenu", l["Menu:Category"], url: "/categories");
+        northwindTradersMenu.AddItem(categoriesMenu);
+      }
+
 
       context.Menu.AddItem(northwindTradersMenu);
 

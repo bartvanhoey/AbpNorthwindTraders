@@ -1,0 +1,119 @@
+@page "/categories"
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<ICategoryAppService, CategoryDto, int, PagedAndSortedResultRequestDto, CreateCategoryDto,
+UpdateCategoryDto>
+
+<Card>
+  <CardHeader>
+    <Row>
+      <Column ColumnSize="ColumnSize.Is6">
+        <h2>@L["Categories"]</h2>
+      </Column>
+      <Column ColumnSize="ColumnSize.Is6">
+        <Paragraph Alignment="TextAlignment.Right">
+          @if (canCreateCategory)
+                                  {
+                                    <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewCategory"]</Button>
+                                  }
+                                  </Paragraph>
+                                </Column>
+                              </Row>
+                            </CardHeader>
+
+                            <CardBody>
+                              <DataGrid TItem="CategoryDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+                          ShowPager="true" PageSize="PageSize">
+                                <DataGridColumns>
+                                  <DataGridColumn Width="150px" TItem="CategoryDto" Field="@nameof(CategoryDto.Id)" Sortable="true"
+                          Caption="@L["Actions"]">
+                                    <DisplayTemplate>
+                                      <Dropdown>
+                                        <DropdownToggle Color="Color.Primary">
+                                          @L["Actions"]
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                          @if (canUpdateCategory)
+                                            {
+                                              <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                                @L["Edit"]
+                                              </DropdownItem>
+                                            }
+                                              @if (canDeleteCategory)
+                                            {
+                                              <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                                @L["Delete"]
+                                              </DropdownItem>
+                                            }
+                                            </DropdownMenu>
+                                          </Dropdown>
+                                        </DisplayTemplate>
+                                      </DataGridColumn>
+                                      <DataGridColumn TItem="CategoryDto" Field="@nameof(CategoryDto.CategoryName)"
+                              Caption="@L["CategoryCategoryName"]"></DataGridColumn>
+                                      <DataGridColumn TItem="CategoryDto" Field="@nameof(CategoryDto.Description)"
+                              Caption="@L["CategoryDescription"]"></DataGridColumn>
+                                    </DataGridColumns>
+                                  </DataGrid>
+                                </CardBody>
+                              </Card>
+
+                              <Modal @ref="CreateModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Default">
+                                  <ModalHeader>
+                                    <ModalTitle>@L["NewCategory"]</ModalTitle>
+                                    <CloseButton Clicked="CloseCreateModalAsync" />
+                                  </ModalHeader>
+                                  <ModalBody>
+                                    <Row>
+                                      <Column ColumnSize="ColumnSize.Is12">
+                                        <Field>
+                                          <FieldLabel>@L["CategoryCategoryName"]</FieldLabel>
+                                          <TextEdit @bind-text="NewEntity.CategoryName" />
+                                        </Field>
+                                        <Field>
+                                          <FieldLabel>@L["CategoryDescription"]</FieldLabel>
+                                          <TextEdit @bind-text="NewEntity.Description" />
+                                        </Field>
+                                      </Column>
+                                    </Row>
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                                    <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+                                  </ModalFooter>
+                                </ModalContent>
+                              </Modal>
+
+                              <Modal @ref="EditModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Large">
+                                  <ModalHeader>
+                                    <ModalTitle>@EditingEntity.CategoryName</ModalTitle>
+                                    <CloseButton Clicked="CloseEditModalAsync" />
+                                  </ModalHeader>
+                                  <ModalBody>
+                                    <Row>
+                                      <Column ColumnSize="ColumnSize.Is12">
+                                        <Field>
+                                          <FieldLabel>@L["CategoryCategoryName"]</FieldLabel>
+                                          <TextEdit @bind-text="EditingEntity.CategoryName" />
+                                        </Field>
+                                        <Field>
+                                          <FieldLabel>@L["CategoryDescription"]</FieldLabel>
+                                          <TextEdit @bind-text="EditingEntity.Description" />
+                                        </Field>
+                                      </Column>
+                                    </Row>
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                                    <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+                                  </ModalFooter>
+                                </ModalContent>
+                              </Modal>
