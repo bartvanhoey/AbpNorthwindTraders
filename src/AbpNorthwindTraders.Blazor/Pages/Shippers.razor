@@ -1,0 +1,119 @@
+@page "/shippers"
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<IShipperAppService, ShipperDto, int, PagedAndSortedResultRequestDto, CreateShipperDto,
+UpdateShipperDto>
+
+<Card>
+    <CardHeader>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <h2>@L["Shippers"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Paragraph Alignment="TextAlignment.Right">
+                    @if (canCreateShipper)
+                                        {
+                                            <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewShipper"]</Button>
+                                        }
+                                        </Paragraph>
+                                    </Column>
+                                </Row>
+                            </CardHeader>
+
+                            <CardBody>
+                                <DataGrid TItem="ShipperDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+                        ShowPager="true" PageSize="PageSize">
+                                    <DataGridColumns>
+                                        <DataGridColumn Width="150px" TItem="ShipperDto" Field="@nameof(ShipperDto.Id)" Sortable="true"
+                        Caption="@L["Actions"]">
+                                            <DisplayTemplate>
+                                                <Dropdown>
+                                                    <DropdownToggle Color="Color.Primary">
+                                                        @L["Actions"]
+                                                    </DropdownToggle>
+                                                    <DropdownMenu>
+                                                        @if (canUpdateShipper)
+                                                        {
+                                                            <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                                                @L["Edit"]
+                                                            </DropdownItem>
+                                                        }
+                                                            @if (canDeleteShipper)
+                                                        {
+                                                            <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                                                @L["Delete"]
+                                                            </DropdownItem>
+                                                        }
+                                                        </DropdownMenu>
+                                                    </Dropdown>
+                                                </DisplayTemplate>
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="ShipperDto" Field="@nameof(ShipperDto.CompanyName)"
+                            Caption="@L["ShipperCompanyName"]"></DataGridColumn>
+                                            <DataGridColumn TItem="ShipperDto" Field="@nameof(ShipperDto.Phone)" Caption="@L["ShipperPhone"]">
+                                            </DataGridColumn>
+                                        </DataGridColumns>
+                                    </DataGrid>
+                                </CardBody>
+                            </Card>
+
+                            <Modal @ref="CreateModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Large">
+                                    <ModalHeader>
+                                        <ModalTitle>@L["NewShipper"]</ModalTitle>
+                                        <CloseButton Clicked="CloseCreateModalAsync" />
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <Row>
+                                            <Column ColumnSize="ColumnSize.Is12">
+                                                <Field>
+                                                    <FieldLabel>@L["ShipperCompanyName"]</FieldLabel>
+                                                    <TextEdit @bind-text="NewEntity.CompanyName" />
+                                                </Field>
+                                                <Field>
+                                                  <FieldLabel>@L["ShipperPhone"]</FieldLabel>
+                                                  <TextEdit @bind-text="NewEntity.Phone" />
+                                                </Field>
+                                            </Column>
+                                        </Row>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                                        <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
+
+                            <Modal @ref="EditModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Large">
+                                    <ModalHeader>
+                                        <ModalTitle>@EditingEntity.CompanyName</ModalTitle>
+                                        <CloseButton Clicked="CloseEditModalAsync" />
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <Row>
+                                            <Column ColumnSize="ColumnSize.Is12">
+                                                <Field>
+                                                    <FieldLabel>@L["ShipperCompanyName"]</FieldLabel>
+                                                    <TextEdit @bind-text="EditingEntity.CompanyName" />
+                                                </Field>
+                                                <Field>
+                                                  <FieldLabel>@L["ShipperPhone"]</FieldLabel>
+                                                  <TextEdit @bind-text="EditingEntity.Phone" />
+                                                </Field>
+                                            </Column>
+                                        </Row>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                                        <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>

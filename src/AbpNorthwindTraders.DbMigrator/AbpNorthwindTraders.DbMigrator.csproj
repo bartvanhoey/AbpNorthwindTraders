@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="3.3.0-rc.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.3.0" />
     <ProjectReference Include="..\AbpNorthwindTraders.Application.Contracts\AbpNorthwindTraders.Application.Contracts.csproj" />
     <ProjectReference Include="..\AbpNorthwindTraders.EntityFrameworkCore.DbMigrations\AbpNorthwindTraders.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>

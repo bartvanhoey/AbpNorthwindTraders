@@ -70,6 +70,13 @@ namespace AbpNorthwindTraders.Blazor
         northwindTradersMenu.AddItem(productsMenu);
       }
 
+      if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Shipper.Default))
+      {
+        var shippersMenu = new ApplicationMenuItem("ShippersMenu", l["Menu:Shipper"], url: "/shippers");
+        northwindTradersMenu.AddItem(shippersMenu);
+      }
+
+
       context.Menu.AddItem(northwindTradersMenu);
 
 
