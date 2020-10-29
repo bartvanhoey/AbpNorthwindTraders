@@ -1,0 +1,203 @@
+@* "NewProduct": "New Product", *@
+@page "/products"
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<IProductAppService, ProductDto, int, PagedAndSortedResultRequestDto, CreateProductDto, UpdateProductDto>
+
+<Card>
+    <CardHeader>
+        <Row>
+          <Column ColumnSize="ColumnSize.Is6">
+              <h2>@L["Products"]</h2>
+          </Column>
+          <Column ColumnSize="ColumnSize.Is6">
+              <Paragraph Alignment="TextAlignment.Right">
+                  @if (canCreateProduct)
+                  {
+                      <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewProduct"]</Button>
+                  }
+              </Paragraph>
+          </Column>
+        </Row>
+    </CardHeader>
+
+    <CardBody>
+        <DataGrid TItem="ProductDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount" ShowPager="true" PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn Width="150px" TItem="ProductDto" Field="@nameof(ProductDto.Id)" Sortable="true" Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                @if (canUpdateProduct)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (canDeleteProduct)
+                                {
+                                    <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.ProductName)" Caption="@L["ProductProductName"]"></DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.SupplierName)" Caption="@L["ProductSupplierName"]"></DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.QuantityPerUnit)" Caption="@L["ProductQuantityPerUnit"]"></DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.UnitPrice)" Caption="@L["ProductUnitPrice"]"></DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.UnitsInStock)" Caption="@L["ProductUnitsInStock"]"></DataGridColumn>
+                <DataGridColumn TItem="ProductDto" Field="@nameof(ProductDto.UnitsOnOrder)" Caption="@L["ProductUnitsOnOrder"]"></DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<Modal @ref="CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.Large">
+        <ModalHeader>
+            <ModalTitle>@L["NewProduct"]</ModalTitle>
+            <CloseButton Clicked="CloseCreateModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+           <Row>
+             <Column ColumnSize="ColumnSize.Is12">
+                <Field>
+                  <FieldLabel>@L["ProductProductName"]</FieldLabel>
+                  <TextEdit @bind-text="NewEntity.ProductName" />
+                </Field>
+                @* SupplierId *@
+                <Field>
+                  <FieldLabel>@L["ProductSupplier"]</FieldLabel>
+                  <Select TValue="int?" @bind-SelectedValue="@NewEntity.SupplierId">
+                    @foreach (var value in supplierList)
+                    {
+                      <SelectItem TValue="int?" Value="@value.Id">
+                          @value.CompanyName
+                      </SelectItem>
+                    }
+                  </Select>
+                </Field>
+                @* CategoryId *@
+                <Field>
+                  <FieldLabel>@L["ProductCategory"]</FieldLabel>
+                  <Select TValue="int?" @bind-SelectedValue="@NewEntity.CategoryId">
+                    @foreach (var value in categoryList)
+                    {
+                      <SelectItem TValue="int?" Value="@value.Id">
+                          @value.CategoryName
+                      </SelectItem>
+                    }
+                  </Select>
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductQuantityPerUnit"]</FieldLabel>
+                  <TextEdit @bind-text="NewEntity.QuantityPerUnit" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitPrice"]</FieldLabel>
+                  <NumericEdit TValue="decimal?" @bind-Value="NewEntity.UnitPrice" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitsInStock"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="NewEntity.UnitsInStock" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitsOnOrder"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="NewEntity.UnitsOnOrder" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductReorderLevel"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="NewEntity.ReorderLevel" />
+                </Field>
+             </Column>
+           </Row>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+            <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="EditModal">
+  <ModalBackdrop />
+  <ModalContent IsCentered="true" Size="ModalSize.Large">
+      <ModalHeader>
+          <ModalTitle>@EditingEntity.ProductName</ModalTitle>
+          <CloseButton Clicked="CloseEditModalAsync" />
+      </ModalHeader>
+      <ModalBody>
+       <Row>
+         <Column ColumnSize="ColumnSize.Is12">
+                <Field>
+                  <FieldLabel>@L["ProductProductName"]</FieldLabel>
+                  <TextEdit @bind-text="EditingEntity.ProductName" />
+                </Field>
+           
+                <Field>
+                  <FieldLabel>@L["ProductSupplier"]</FieldLabel>
+                  <Select TValue="int?" @bind-SelectedValue="@EditingEntity.SupplierId">
+                    @foreach (var value in supplierList)
+                    {
+                      <SelectItem TValue="int?" Value="@value.Id">
+                          @value.CompanyName
+                      </SelectItem>
+                    }
+                  </Select>
+                </Field>
+
+
+                <Field>
+                  <FieldLabel>@L["ProductCategory"]</FieldLabel>
+                  <Select TValue="int?" @bind-SelectedValue="@EditingEntity.CategoryId">
+                    @foreach (var value in categoryList)
+                    {
+                      <SelectItem TValue="int?" Value="@value.Id">
+                          @value.CategoryName
+                      </SelectItem>
+                    }
+                  </Select>
+                </Field>
+
+
+                <Field>
+                  <FieldLabel>@L["ProductQuantityPerUnit"]</FieldLabel>
+                  <TextEdit @bind-text="EditingEntity.QuantityPerUnit" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitPrice"]</FieldLabel>
+                  <NumericEdit TValue="decimal?" @bind-Value="EditingEntity.UnitPrice" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitsInStock"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="EditingEntity.UnitsInStock" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductUnitsOnOrder"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="EditingEntity.UnitsOnOrder" />
+                </Field>
+                <Field>
+                  <FieldLabel>@L["ProductReorderLevel"]</FieldLabel>
+                  <NumericEdit TValue="short?" @bind-Value="EditingEntity.ReorderLevel" />
+                </Field>
+           
+         </Column>
+       </Row>
+      </ModalBody>
+      <ModalFooter>
+          <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+          <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+      </ModalFooter>
+  </ModalContent>
+</Modal>

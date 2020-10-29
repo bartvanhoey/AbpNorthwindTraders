@@ -29,12 +29,18 @@ namespace AbpNorthwindTraders
             CreateMap<Customer, CustomerDto>();
             CreateMap<CreateCustomerDto, Customer>(MemberList.Source);
             CreateMap<UpdateCustomerDto, Customer>(MemberList.Source);
+
             CreateMap<Supplier, SupplierDto>();
             CreateMap<CreateSupplierDto, Supplier>(MemberList.Source);
             CreateMap<UpdateSupplierDto, Supplier>(MemberList.Source);
+            CreateMap<Supplier, SupplierLookupDto>();
+
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateCategoryDto, Category>(MemberList.Source);
             CreateMap<UpdateCategoryDto, Category>(MemberList.Source);
+            CreateMap<Category, CategoryLookupDto>();
+
+
             CreateMap<Product, ProductDto>();
             CreateMap<CreateProductDto, Product>(MemberList.Source);
             CreateMap<UpdateProductDto, Product>(MemberList.Source);

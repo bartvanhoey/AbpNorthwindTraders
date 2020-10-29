@@ -10,6 +10,8 @@ namespace AbpNorthwindTraders.Domain.Dtos
 
         public int? SupplierId { get; set; }
 
+        public string SupplierName { get; set; }
+
         public int? CategoryId { get; set; }
 
         public string QuantityPerUnit { get; set; }

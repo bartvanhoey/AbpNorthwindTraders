@@ -20,7 +20,7 @@ namespace AbpNorthwindTraders.Blazor.Pages
       canUpdateEmployee = await AuthorizationService.IsGrantedAsync(AbpNorthwindTradersPermissions.Employee.Update);
       canDeleteEmployee = await AuthorizationService.IsGrantedAsync(AbpNorthwindTradersPermissions.Employee.Delete);
     
-    managerList = (await AppService.GetEmployeeLookupAsync()).Items;
+     managerList = (await AppService.GetEmployeeLookupAsync()).Items;
 
     }
   }

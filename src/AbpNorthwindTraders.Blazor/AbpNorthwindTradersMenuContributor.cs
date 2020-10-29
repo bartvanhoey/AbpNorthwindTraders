@@ -58,14 +58,17 @@ namespace AbpNorthwindTraders.Blazor
         northwindTradersMenu.AddItem(suppliersMenu);
       }
 
-      // using AbpNorthwindTraders.Permissions;
-      // "Menu:Category": "MenuCategory", 
       if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Category.Default))
       {
         var categoriesMenu = new ApplicationMenuItem("CategoriesMenu", l["Menu:Category"], url: "/categories");
         northwindTradersMenu.AddItem(categoriesMenu);
       }
 
+      if (await context.IsGrantedAsync(AbpNorthwindTradersPermissions.Product.Default))
+      {
+        var productsMenu = new ApplicationMenuItem("ProductsMenu", l["Menu:Product"], url: "/products");
+        northwindTradersMenu.AddItem(productsMenu);
+      }
 
       context.Menu.AddItem(northwindTradersMenu);
 
