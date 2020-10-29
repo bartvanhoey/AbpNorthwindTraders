@@ -1,0 +1,110 @@
+@page "/orders"
+@using Volo.Abp.Application.Dtos
+@using Volo.Abp.BlazoriseUI
+@using AbpNorthwindTraders.Domain
+@using AbpNorthwindTraders.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AbpNorthwindTradersResource> L
+@inherits AbpCrudPageBase<IOrderAppService, OrderDto, int, PagedAndSortedResultRequestDto, CreateOrderDto,
+UpdateOrderDto>
+
+<Card>
+    <CardHeader>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is6">
+                <h2>@L["Orders"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Paragraph Alignment="TextAlignment.Right">
+                    @if (canCreateOrder)
+                                        {
+                                            <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">@L["NewOrder"]</Button>
+                                        }
+                                        </Paragraph>
+                                    </Column>
+                                </Row>
+                            </CardHeader>
+
+                            <CardBody>
+                                <DataGrid TItem="OrderDto" Data="Entities" ReadData="OnDataGridReadAsync" TotalItems="TotalCount"
+                        ShowPager="true" PageSize="PageSize">
+                                    <DataGridColumns>
+                                        <DataGridColumn Width="150px" TItem="OrderDto" Field="@nameof(OrderDto.Id)" Sortable="true"
+                        Caption="@L["Actions"]">
+                                            <DisplayTemplate>
+                                                <Dropdown>
+                                                    <DropdownToggle Color="Color.Primary">
+                                                        @L["Actions"]
+                                                    </DropdownToggle>
+                                                    <DropdownMenu>
+                                                        @if (canUpdateOrder)
+                                                        {
+                                                            <DropdownItem Clicked="() => OpenEditModalAsync(context.Id)">
+                                                                @L["Edit"]
+                                                            </DropdownItem>
+                                                        }
+                                                            @if (canDeleteOrder)
+                                                        {
+                                                            <DropdownItem Clicked="() => DeleteEntityAsync(context)">
+                                                                @L["Delete"]
+                                                            </DropdownItem>
+                                                        }
+                                                        </DropdownMenu>
+                                                    </Dropdown>
+                                                </DisplayTemplate>
+                                            </DataGridColumn>
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.CustomerId)" Caption="@L["OrderCustomerId"]"></DataGridColumn>
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.EmployeeFullName)" Caption="@L["OrderEmployeeFullName"]"></DataGridColumn>
+
+                                        </DataGridColumns>
+                                    </DataGrid>
+                                </CardBody>
+                            </Card>
+
+                            <Modal @ref="CreateModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Large">
+                                    <ModalHeader>
+                                        <ModalTitle>@L["NewOrder"]</ModalTitle>
+                                        <CloseButton Clicked="CloseCreateModalAsync" />
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <Row>
+                                            <Column ColumnSize="ColumnSize.Is12">
+                                                <Field>
+                                                    <FieldLabel>@L["OrderName"]</FieldLabel>
+                                                    <TextEdit @bind-text="NewEntity.CustomerId" />
+                                                </Field>
+                                            </Column>
+                                        </Row>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                                        <Button Color="Color.Primary" Clicked="CreateEntityAsync">@L["Save"]</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
+
+                            <Modal @ref="EditModal">
+                                <ModalBackdrop />
+                                <ModalContent IsCentered="true" Size="ModalSize.Large">
+                                    <ModalHeader>
+                                        <ModalTitle>@EditingEntity.CustomerId</ModalTitle>
+                                        <CloseButton Clicked="CloseEditModalAsync" />
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <Row>
+                                            <Column ColumnSize="ColumnSize.Is12">
+                                                <Field>
+                                                    <FieldLabel>@L["OrderCustomerId"]</FieldLabel>
+                                                    <TextEdit @bind-text="EditingEntity.CustomerId" />
+                                                </Field>
+                                            </Column>
+                                        </Row>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                                        <Button Color="Color.Primary" Clicked="UpdateEntityAsync">@L["Save"]</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>

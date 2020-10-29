@@ -143,6 +143,7 @@ namespace AbpNorthwindTraders.EntityFrameworkCore
         b.Property(e => e.UnitPrice).HasColumnType("money").HasDefaultValueSql("((0))");
         b.Property(e => e.UnitsInStock).HasDefaultValueSql("((0))");
         b.Property(e => e.UnitsOnOrder).HasDefaultValueSql("((0))");
+        b.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Product_Supplier");
       });
 
 

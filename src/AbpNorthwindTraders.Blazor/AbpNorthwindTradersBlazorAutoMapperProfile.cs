@@ -17,6 +17,7 @@ namespace AbpNorthwindTraders.Blazor
       CreateMap<CategoryDto, UpdateCategoryDto>();
       CreateMap<ProductDto, UpdateProductDto>();
       CreateMap<ShipperDto, UpdateShipperDto>();
+      CreateMap<OrderDto, UpdateOrderDto>();
     }
   }
 }

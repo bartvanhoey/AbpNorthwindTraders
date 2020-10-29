@@ -74,5 +74,8 @@ namespace AbpNorthwindTraders.Domain
       return new ListResultDto<SupplierLookupDto>(ObjectMapper.Map<List<Supplier>, List<SupplierLookupDto>>(suppliers));
     }
 
+
+
+
   }
 }

@@ -24,7 +24,8 @@ namespace AbpNorthwindTraders
             CreateMap<CreateEmployeeDto, Employee>(MemberList.Source);
             CreateMap<UpdateEmployeeDto, Employee>(MemberList.Source);
             CreateMap<Employee,EmployeeLookupDto>()
-                .ForMember(x => x.ManagerName, src => src.MapFrom(e => e.FirstName + " " + e.LastName));
+                .ForMember(x => x.ManagerName, src => src.MapFrom(e => e.FirstName + " " + e.LastName))
+                .ForMember(x => x.EmployeeFullName, src => src.MapFrom(e => e.FirstName + " " + e.LastName));
             
             CreateMap<Customer, CustomerDto>();
             CreateMap<CreateCustomerDto, Customer>(MemberList.Source);
