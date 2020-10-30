@@ -15,5 +15,7 @@ namespace AbpNorthwindTraders.Domain
             UpdateOrderDto>
     {
         Task<ListResultDto<EmployeeLookupDto>> GetEmployeeLookupAsync();
+        Task<ListResultDto<ShipperLookupDto>> GetShipperLookupAsync();
+        Task<ListResultDto<CustomerLookupDto>> GetCustomerLookupAsync();
     }
 }

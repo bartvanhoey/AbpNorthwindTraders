@@ -31,6 +31,9 @@ namespace AbpNorthwindTraders.Domain.Dtos
     public string ShipPostalCode { get; set; }
 
     public string ShipCountry { get; set; }
+
     public string EmployeeFullName { get; set; }
+
+    public string ShipperCompanyName { get; set; }
   }
 }

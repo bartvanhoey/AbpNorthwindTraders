@@ -19,9 +19,13 @@ namespace AbpNorthwindTraders.Domain
     protected override string DeletePolicyName { get; set; } = AbpNorthwindTradersPermissions.Order.Delete;
     private readonly IOrderRepository _repository;
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IShipperRepository _shipperRepository;
+    private readonly ICustomerRepository _customerRepository;
 
-    public OrderAppService(IOrderRepository repository, IEmployeeRepository employeeRepository) : base(repository)
+    public OrderAppService(IOrderRepository repository, IEmployeeRepository employeeRepository, IShipperRepository shipperRepository, ICustomerRepository customerRepository) : base(repository)
     {
+      _shipperRepository = shipperRepository;
+      _customerRepository = customerRepository;
       _repository = repository;
       _employeeRepository = employeeRepository;
     }
@@ -41,10 +45,13 @@ namespace AbpNorthwindTraders.Domain
 
       var queryResult = await AsyncExecuter.ToListAsync(query);
 
-      var orderDtos = queryResult.Select(x => {
-          var orderDto = ObjectMapper.Map<Order, OrderDto>(x.order);
-          orderDto.EmployeeFullName = x.employee.FirstName + " " + x.employee.LastName;
-          return orderDto;
+      var orderDtos = queryResult.Select(x =>
+      {
+        var orderDto = ObjectMapper.Map<Order, OrderDto>(x.order);
+        orderDto.EmployeeFullName = x.employee.FirstName + " " + x.employee.LastName;
+        orderDto.ShipperCompanyName = (_shipperRepository.GetAsync(x.order.ShipVia.Value).Result).CompanyName;
+
+        return orderDto;
       }).ToList();
 
       var totalCount = await Repository.GetCountAsync();
@@ -57,6 +64,18 @@ namespace AbpNorthwindTraders.Domain
     {
       var employees = await _employeeRepository.GetListAsync();
       return new ListResultDto<EmployeeLookupDto>(ObjectMapper.Map<List<Employee>, List<EmployeeLookupDto>>(employees));
+    }
+
+    public async Task<ListResultDto<ShipperLookupDto>> GetShipperLookupAsync()
+    {
+      var shippers = await _shipperRepository.GetListAsync();
+      return new ListResultDto<ShipperLookupDto>(ObjectMapper.Map<List<Shipper>, List<ShipperLookupDto>>(shippers));
+    }
+
+    public async Task<ListResultDto<CustomerLookupDto>> GetCustomerLookupAsync()
+    {
+      var customers = await _customerRepository.GetListAsync();
+      return new ListResultDto<CustomerLookupDto>(ObjectMapper.Map<List<Customer>, List<CustomerLookupDto>>(customers));
     }
 
   }

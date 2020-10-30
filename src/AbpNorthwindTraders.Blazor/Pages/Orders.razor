@@ -55,7 +55,10 @@ UpdateOrderDto>
                                             </DataGridColumn>
                                             <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.CustomerId)" Caption="@L["OrderCustomerId"]"></DataGridColumn>
                                             <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.EmployeeFullName)" Caption="@L["OrderEmployeeFullName"]"></DataGridColumn>
-
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.OrderDate)" Caption="@L["OrderOrderDate"]"></DataGridColumn>
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.RequiredDate)" Caption="@L["RequiredDate"]"></DataGridColumn>
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.ShippedDate)" Caption="@L["OrderShippedDate"]"></DataGridColumn>
+                                            <DataGridColumn TItem="OrderDto" Field="@nameof(OrderDto.ShipperCompanyName)" Caption="@L["OrderShipVia"]"></DataGridColumn>
                                         </DataGridColumns>
                                     </DataGrid>
                                 </CardBody>
@@ -74,6 +77,17 @@ UpdateOrderDto>
                                                 <Field>
                                                     <FieldLabel>@L["OrderName"]</FieldLabel>
                                                     <TextEdit @bind-text="NewEntity.CustomerId" />
+                                                </Field>
+                                                <Field>
+                                                  <FieldLabel>@L["OrderCustomer"]</FieldLabel>
+                                                  <Select TValue="string" @bind-SelectedValue="@NewEntity.CustomerId">
+                                                    @foreach (var value in customerList)
+                                                    {
+                                                      <SelectItem TValue="string" Value="@value.Id">
+                                                          @value.CustomerCompanyName
+                                                      </SelectItem>
+                                                    }
+                                                  </Select>
                                                 </Field>
                                             </Column>
                                         </Row>

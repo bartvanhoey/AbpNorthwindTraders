@@ -93,6 +93,7 @@
         "OrderCustomerId": "Customer id",
         "OrderDeletionConfirmationMessage": "Are you sure to delete the order {0}?",
         "OrderEmployee": "Employee",
+        "OrderEmployeeFullName": "Employee",
         "OrderEmployeeId": "OrderEmployeeId",
         "OrderFreight": "Freight",
         "OrderOrderDate": "Order date",
